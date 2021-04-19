@@ -16,3 +16,11 @@ exports.client = (req,res) =>{
     })
 
 }
+exports.info = (req, res ,next)=>{
+    Client.find()
+    .then(response => {res.json({response})
+    })
+    .catch(error =>{
+        res.json({message:error})
+    })
+}
