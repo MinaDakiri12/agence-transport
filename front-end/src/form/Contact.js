@@ -58,6 +58,9 @@ function Contact() {
             </div>
             
             <button className="btn btn-lg btn-block btn-outline-info mt-4">Send</button>
+
+
+            
         </form>
    )
    return (
