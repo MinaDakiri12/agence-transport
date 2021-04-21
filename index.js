@@ -4,6 +4,7 @@ const moongoose = require('mongoose');
 
 
 
+
 // Imports Routes
 const clientRoutes = require ('./routes/clients');
 
@@ -11,6 +12,7 @@ const clientRoutes = require ('./routes/clients');
 //Config app
 const app = express();
 require('dotenv').config();
+
 
 //database
 moongoose.connect(process.env.DATABASE,{
