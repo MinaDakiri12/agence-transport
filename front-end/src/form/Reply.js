@@ -17,33 +17,33 @@ function Reply(props) {
     console.log(e.target.value);
     setMessage(e.target.value)
   }
-   const [contact,setContact]= useState([])
+   const [client,setclient]= useState([])
 
-  const getContact =async ()=>{
+  const getclient =async ()=>{
    try {
       const {data} = await axios.post(`http://localhost:3000/api/clients/single/${id}`);
-    if(data) setContact(data)
+    if(data) setclient(data)
    } catch (error) {
      if(error) console.log(error.response);
    }
   }
   useEffect(()=>{
-    getContact()
+    getclient()
   },[])
   return (
      <div className="container">
      {
-       contact && (
+       client && (
          <>
               <h1> Repondre </h1>
           <p>
-            <span>A : {contact.first_name} {contact.last_name}</span> 
+            <span>A : {client.first_name} {client.last_name}</span> 
           </p>
           <p>
-            <span>Email :  {contact.email}</span> 
+            <span>Email :  {client.email}</span> 
           </p>
           <p>
-            <span>Message :{contact.message} </span> 
+            <span>Message :{client.message} </span> 
           </p>
          </>
        )
