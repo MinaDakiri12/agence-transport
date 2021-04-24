@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import Layout from './../core/Layout'
+import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 
 
-function Contact() {
+function Contact(props) {
 
     const[user, setUser] = useState({
         first_name:'',
@@ -20,8 +21,9 @@ function Contact() {
     const submit = e => {
         e.preventDefault();
 
-        axios.post("http://localhost:3000/api/clients/client" , user)
+      const res =  axios.post("http://localhost:3000/api/clients/client" , user)
         .then(res => console.log(res.user));
+        if(res) props.history.push('/') 
 
         console.log(user)
         
@@ -66,7 +68,7 @@ function Contact() {
    )
    return (
     <div>
-       <Layout title="Contact Us">
+       <Layout title="">
            <div className="row">
                <div className="col-md-6 mx-auto">
 
