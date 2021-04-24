@@ -1,16 +1,16 @@
-const Client = require('../models/clients');
+const Client = require('../models/Clients');
 const smtpTransport = require('nodemailer-smtp-transport');
 const nodemailer = require('nodemailer');
 
 exports.addClient = (req,res) =>{
 
-    const client = new Client(req.body);
+    const Client = new Client(req.body);
     
-    client.save((err, client) => {
+    Client.save((err, Client) => {
         if(err) {
             return res.status(400).send(err)
         }
-        res.send(client)
+        res.send(Client)
 
     })
 
@@ -28,13 +28,13 @@ exports.findClient = async (req, res) => {
     const { email } = req.body;
     try {
       if (date && email) {
-        const result = await CLient.find({ email, date });
+        const result = await Client.find({ email, date });
         if (result) return res.status(200).json(result);
       } else if (date && !email) {
-        const result = await CLient.find({ date });
+        const result = await Client.find({ date });
         if (result) return res.status(200).json(result);
       } else if (!date && email) {
-        const result = await CLient.find({ email });
+        const result = await Client.find({ email });
         if (result) return res.status(200).json(result);
       }
     } catch (error) {
@@ -56,11 +56,11 @@ exports.reply = async (req, res) => {
     const { id } = req.params;
     const { message } = req.body;
     try {
-      const currentCLient = await CLient.findOne({ _id: id });
-      if (currentCLient) {
+      const currentClient = await Client.findOne({ _id: id });
+      if (currentClient) {
         const mailOptions = {
           from: 'jsnode22@gmail.com',
-          to: currentCLient.email,
+          to: currentClient.email,
           subject: 'Mail',
           text: message,
         };
@@ -68,15 +68,15 @@ exports.reply = async (req, res) => {
         if (envoiMail) res.status(200).json('Mail sent');
       }
     } catch (error) {
-      return res.status(500).json(error);
+      throw Error(error) 
     }
 };
 
 exports.single = async (req, res) => {
     const { id } = req.params;
     try {
-      const currentCLient = await CLient.findOne({ _id: id });
-      if (currentCLient) return res.status(200).json(currentCLient);
+      const currentClient = await Client.findOne({ _id: id });
+      if (currentClient) return res.status(200).json(currentClient);
     } catch (error) {
       return res.status(500).json(error);
     }
