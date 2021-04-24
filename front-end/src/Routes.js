@@ -11,7 +11,7 @@ function Routes() {
           <Menu />
           <Switch>
               <Route path='/contact' exact component={Contact}/>
-              <Route path='/home' exact component={Home}/>
+              <Route path='/' exact component={Home}/>
           </Switch>
        </BrowserRouter>
     )
