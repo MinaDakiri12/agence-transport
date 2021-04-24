@@ -1,39 +1,8 @@
-const Client = require('../models/clients')
-var nodemailer = require('nodemailer');
+const Client = require('../models/clients');
+const smtpTransport = require('nodemailer-smtp-transport');
+const nodemailer = require('nodemailer');
 
-//sendmailer
-var transport = nodemailer.createTransport({
-    
-        service:'gmail',
-        auth:{
-            user: 'jsnode22@gmail.com',
-            pass:'Nodejs1234'
-        }
-    
-
-})
-
-//send out email
-
-var mailOptions = {
-    from: 'jsnode22@gmail.com',
-    to: 'minadakiri7@gmail.com',
-    subject: 'testing send mail',
-    text:'This is the body of the mail'
-}
-transport.sendMail(mailOptions, function(error,info){
-    if(error){
-        console.log(error)
-    }
-    else{
-        console.log("Email send" + info.response) 
-    }
-})
-exports.test = (req, res) => {
-    res.send({message:'clients module' })
-}
-
-exports.client = (req,res) =>{
+exports.addClient = (req,res) =>{
 
     const client = new Client(req.body);
     
@@ -54,3 +23,65 @@ exports.info = (req, res ,next)=>{
         res.json({message:error})
     })
 }
+exports.findClient = async (req, res) => {
+    const { date } = req.body;
+    const { email } = req.body;
+    try {
+      if (date && email) {
+        const result = await CLient.find({ email, date });
+        if (result) return res.status(200).json(result);
+      } else if (date && !email) {
+        const result = await CLient.find({ date });
+        if (result) return res.status(200).json(result);
+      } else if (!date && email) {
+        const result = await CLient.find({ email });
+        if (result) return res.status(200).json(result);
+      }
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+};
+
+const transporter = nodemailer.createTransport(
+    smtpTransport({
+      host: 'smtp.gmail.com',
+      auth: {
+        type: 'custom',
+        user: 'jsnode22@gmail.com',
+        pass: 'Nodejs1234',
+      },
+    })
+  );
+exports.reply = async (req, res) => {
+    const { id } = req.params;
+    const { message } = req.body;
+    try {
+      const currentCLient = await CLient.findOne({ _id: id });
+      if (currentCLient) {
+        const mailOptions = {
+          from: 'jsnode22@gmail.com',
+          to: currentCLient.email,
+          subject: 'Mail',
+          text: message,
+        };
+        const envoiMail = await transporter.sendMail(mailOptions);
+        if (envoiMail) res.status(200).json('Mail sent');
+      }
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+};
+
+exports.single = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const currentCLient = await CLient.findOne({ _id: id });
+      if (currentCLient) return res.status(200).json(currentCLient);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+};
+  
+  
+
+
