@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+
 function Reply(props) {
   const {id} = useParams()
   const [message,setMessage] = useState('')
@@ -17,18 +18,18 @@ function Reply(props) {
     console.log(e.target.value);
     setMessage(e.target.value)
   }
-   const [client,setclient]= useState([])
+   const [client,setClient]= useState([])
 
-  const getclient =async ()=>{
+  const getClient =async ()=>{
    try {
       const {data} = await axios.post(`http://localhost:3000/api/clients/single/${id}`);
-    if(data) setclient(data)
+    if(data) setClient(data)
    } catch (error) {
      if(error) console.log(error.response);
    }
   }
   useEffect(()=>{
-    getclient()
+    getClient()
   },[])
   return (
      <div className="container">
