@@ -2,17 +2,19 @@ const Client = require('../models/Clients');
 const smtpTransport = require('nodemailer-smtp-transport');
 const nodemailer = require('nodemailer');
 
+
+
 exports.addClient = (req,res) =>{
 
-    const Client = new Client(req.body);
-    
-    Client.save((err, Client) => {
-        if(err) {
-            return res.status(400).send(err)
-        }
-        res.send(Client)
+  const client = new Client(req.body);
 
-    })
+  client.save((err, client) => {
+      if(err) {
+          return res.status(400).send(err)
+      }
+      res.send(client)
+
+  })
 
 }
 exports.info = (req, res ,next)=>{
