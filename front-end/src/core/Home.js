@@ -71,12 +71,12 @@ const Home =() =>{
         <thead>
           <tr>
             <th scope="col">Id</th>
-            <th scope="col">First name</th>
-            <th scope="col">Last name</th>
-            <th scope="col">email</th>
-            <th scope="col">phone</th>
-            <th scope="col">message</th>
-            <th scope="col">date</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Message</th>
+            <th scope="col">Date</th>
           </tr>
         </thead>
         <tbody>
