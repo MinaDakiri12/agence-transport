@@ -25,7 +25,7 @@ function Contact(props) {
         .then(res => console.log(res.user));
         if(res) props.history.push('/') 
 
-        console.log(user)
+      
         
 
 
