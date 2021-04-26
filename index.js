@@ -2,18 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const moongoose = require('mongoose');
 const cors = require('cors')
+
 //Config app
 const app = express();
 // Imports Routes
 const clientRoutes = require ('./routes/clients');
-const port = 3001;
 
-
-
-
-
-
-
+//PORT
+const port =  3001;
 
 //database
 moongoose.connect(process.env.DATABASE,{
@@ -28,7 +24,7 @@ moongoose.connect(process.env.DATABASE,{
 //Middleware
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded({extended:false}))
+
 
 //Routes Middleware
 app.use('/api/clients', clientRoutes);
