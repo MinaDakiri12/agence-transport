@@ -12,7 +12,7 @@ function Routes() {
           <Menu />
           <Switch>
               <Route path='/contact' exact component={Contact}/>
-              <Route path='/reply' exact component={Reply}/>
+              <Route path='/reply/:id' exact component={Reply}/>
               <Route path='/' exact component={Home}/>
           </Switch>
        </BrowserRouter>

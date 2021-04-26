@@ -21,7 +21,7 @@ function Contact(props) {
     const submit = e => {
         e.preventDefault();
 
-      const res =  axios.post("http://localhost:3000/api/clients/client" , user)
+      const res =  axios.post("http://localhost:3001/api/clients/client" , user)
         .then(res => console.log(res.user));
         if(res) props.history.push('/') 
 

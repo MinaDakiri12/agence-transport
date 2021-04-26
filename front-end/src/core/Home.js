@@ -12,7 +12,7 @@ const Home =() =>{
   const [contact,setContact]= useState([])
   const [formData,setData] = useState(initialData)
   const getContact =async ()=>{
-    const {data} = await axios.get('http://localhost:3000/api/clients/info');
+    const {data} = await axios.get('http://localhost:3001/api/clients/info');
     if(data) setContact(data)
   }
   useEffect(()=>{
@@ -23,7 +23,7 @@ const Home =() =>{
   const handleClick =async (e)=>{
    e.preventDefault();
    try {
-      const {data} = await axios.post('http://localhost:3000/api/clients/search',formData)
+      const {data} = await axios.post('http://localhost:3001/api/clients/search',formData)
     if(data) setContact(data)
    } catch (error) {
      if(error) console.log(error.response);
@@ -91,7 +91,7 @@ const Home =() =>{
                 <td>{element.message}</td>
                 <td>{element.date}</td>
                 <td>
-                  <Link to={`/Reply/${element._id}`}>
+                  <Link to={`/reply/${element._id}`}>
                     <button  className="btn btn-primary"> Repondre</button>
                   </Link>
                 </td>

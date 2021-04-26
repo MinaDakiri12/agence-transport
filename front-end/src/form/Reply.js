@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react'
+import Layout from './../core/Layout'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
@@ -8,7 +9,7 @@ function Reply(props) {
   const handleClick =async (e)=>{
     e.preventDefault();
     try {
-        const res = await axios.post(`http://localhost:3000/api/clients/reply/${id}`,{message});
+        const res = await axios.post(`http://localhost:3001/api/clients/reply/${id}`,{message});
         if(res) props.history.push('/')
       } catch (error) {
         if(error) console.log(error.response);
@@ -22,7 +23,7 @@ function Reply(props) {
 
   const getClient =async ()=>{
    try {
-      const {data} = await axios.post(`http://localhost:3000/api/clients/single/${id}`);
+      const {data} = await axios.post(`http://localhost:3001/api/clients/single/${id}`);
     if(data) setClient(data)
    } catch (error) {
      if(error) console.log(error.response);
@@ -31,12 +32,12 @@ function Reply(props) {
   useEffect(()=>{
     getClient()
   },[])
-  return (
+  const reply = () => (
      <div className="container">
      {
        client && (
          <>
-              <h1> Repondre </h1>
+              
           <p>
             <span>A : {client.first_name} {client.last_name}</span> 
           </p>
@@ -71,6 +72,21 @@ function Reply(props) {
       </form>
     </div>
   )
+  return (
+    <div>
+       <Layout title="Reply">
+           <div className="row">
+               <div className="col-md-6 mx-auto">
+
+                 {reply() }
+               </div>
+            </div>
+           
+
+       </Layout>
+    </div>
+)
+  
 }
 
 export default Reply

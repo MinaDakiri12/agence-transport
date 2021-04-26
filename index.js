@@ -1,18 +1,18 @@
-
+require('dotenv').config();
 const express = require('express');
 const moongoose = require('mongoose');
-
-
-
-
-
-// Imports Routes
-const clientRoutes = require ('./routes/clients');
-
-
+const cors = require('cors')
 //Config app
 const app = express();
-require('dotenv').config();
+// Imports Routes
+const clientRoutes = require ('./routes/clients');
+const port = 3001;
+
+
+
+
+
+
 
 
 //database
@@ -20,13 +20,15 @@ moongoose.connect(process.env.DATABASE,{
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
-
+    
 })
 .then(() => console.log('db connected'))
 .catch(() => console.log('not connected to the database!') )
 
 //Middleware
+app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 
 //Routes Middleware
 app.use('/api/clients', clientRoutes);
@@ -34,5 +36,4 @@ app.use('/api/clients', clientRoutes);
 
 
 
-const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`app is running  on port ${port}`));
